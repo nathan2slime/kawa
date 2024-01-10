@@ -1,9 +1,13 @@
 <script setup lang="ts">
-  import Button from '@/components/core/button/button.component.vue'
+  import { HomeIcon } from 'lucide-vue-next'
+
+  import MenuItem from '@/components/core/menu-item/menu-item.component.vue'
 </script>
 
 <template>
-  <Button disabled>Entrar</Button>
+  <MenuItem  title="Jhonathan" >
+    <HomeIcon :size="20" :strokeWidth="1" />
+  </MenuItem>
 </template>
 
 <style scoped>
