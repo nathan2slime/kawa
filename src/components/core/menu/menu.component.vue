@@ -35,7 +35,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="app-menu">
+  <aside class="app-menu">
     <router-link
       @click="() => onChangeActiveRoute(i.path)"
       :to="i.path"
@@ -46,7 +46,7 @@ onMounted(() => {
         <component :is="i.child" :size="23" :strokeWidth="1" />
       </MenuItem>
     </router-link>
-  </div>
+  </aside>
 </template>
 
 <style scoped lang="scss">

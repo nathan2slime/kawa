@@ -34,6 +34,11 @@ button {
     border 0.3s;
   height: 40px;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+
   &.block {
     width: 100%;
   }
