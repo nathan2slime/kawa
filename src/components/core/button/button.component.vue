@@ -25,8 +25,8 @@ button {
   letter-spacing: 0.03rem;
   color: contrast-color(
     $color-primary-solid-100,
+    $color-white-100,
     $color-black-100,
-    $color-white-100
   );
   cursor: pointer;
   transition:
@@ -51,7 +51,7 @@ button {
 
   &:focus {
     border-color: $color-black-100;
-    transform: scale(1.05);
+    transform: scale(1.03);
   }
 }
 </style>

@@ -28,7 +28,6 @@ import Button from '@/components/core/button/button.component.vue';
   .add-client {
     width: 100%;
     max-width: 80px;
-    font-weight: 500;
   }
 }
 </style>
