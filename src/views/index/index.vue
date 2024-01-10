@@ -1,15 +1,5 @@
-<script setup lang="ts">
-  import { HomeIcon } from 'lucide-vue-next'
+<script setup lang="ts"></script>
 
-  import MenuItem from '@/components/core/menu-item/menu-item.component.vue'
-</script>
+<template></template>
 
-<template>
-  <MenuItem  title="Jhonathan" >
-    <HomeIcon :size="20" :strokeWidth="1" />
-  </MenuItem>
-</template>
-
-<style scoped>
-
-</style>
+<style scoped></style>
