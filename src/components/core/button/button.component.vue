@@ -2,15 +2,15 @@
 import type { ButtonProps } from './button.model';
 
 const props = defineProps<ButtonProps>();
-
-const styles = {
-  block: props.block,
-  disabled: props.disabled,
-};
 </script>
 
 <template>
-  <button :class="styles">
+  <button
+    :class="{
+      block: props.block,
+      disabled: props.disabled,
+    }"
+  >
     <slot />
   </button>
 </template>
