@@ -1,11 +1,5 @@
-<script setup lang="ts">
-  import Button from '@/components/core/button/button.component.vue'
-</script>
+<script setup lang="ts"></script>
 
-<template>
-  <Button disabled>Entrar</Button>
-</template>
+<template></template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
