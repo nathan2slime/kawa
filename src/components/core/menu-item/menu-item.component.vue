@@ -2,16 +2,10 @@
 import type { MenuItemProps } from './menu-item.model';
 
 const props = defineProps<MenuItemProps>();
-
-const styles = {
-  active: props.active,
-  menuitem: true,
-};
 </script>
 <template>
-  <div :class="styles">
+  <div :class="{ active: props.active, menuitem: true }">
     <slot />
-
     {{ props.title }}
   </div>
 </template>
@@ -29,6 +23,7 @@ const styles = {
   justify-content: start;
   align-items: center;
   transition: background 0.14s;
+  text-decoration: none;
 
   gap: 8px;
 

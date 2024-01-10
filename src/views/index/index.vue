@@ -1,5 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Menu from '@/components/core/menu/menu.component.vue';
+</script>
 
-<template></template>
+<template>
+</template>
 
-<style scoped></style>
+<style scoped lang="scss">
+
+</style>
