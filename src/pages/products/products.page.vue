@@ -6,5 +6,4 @@ import Menu from '@/components/core/menu/menu.component.vue';
 </template>
 
 <style scoped lang="scss">
-
 </style>
