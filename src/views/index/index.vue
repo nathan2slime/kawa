@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+  import Button from '@/components/core/button/button.component.vue'
 </script>
 
 <template>
-  <RouterView />
+  <Button disabled>Entrar</Button>
 </template>
 
 <style scoped>
