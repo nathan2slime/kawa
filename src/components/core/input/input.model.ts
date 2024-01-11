@@ -5,5 +5,6 @@ export type InputProps = {
   message?: string;
   label?: string;
   block?: boolean;
+  complete?: string;
   warnings?: string[];
 };

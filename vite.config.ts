@@ -21,6 +21,7 @@ export default defineConfig({
           @import "@/global/variables.scss";
           @import "@/global/functions.scss";
           @import "@/global/breakpoints.scss";
+          @import "@/global/animations.scss";
         `,
       },
     },

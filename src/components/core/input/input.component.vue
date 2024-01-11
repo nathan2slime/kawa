@@ -25,6 +25,7 @@ const model = computed({
       :id="props.name"
       :name="props.name"
       :data-maska="props.maska"
+      :autocomplete="props.complete"
       v-model="model"
     />
 
