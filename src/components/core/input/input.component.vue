@@ -18,15 +18,26 @@ const model = computed({
 </script>
 
 <template>
-  <div :class="{error: !!props.message}">
-    <input v-maska :name="props.name" :data-maska="props.maska" v-model="model" />
+  <div :class="{ error: !!props.message, block: props.block }">
+    <label v-if="props.label" :for="props.name">{{label}}</label>
+    <input
+      v-maska
+      :id="props.name"
+      :name="props.name"
+      :data-maska="props.maska"
+      v-model="model"
+    />
 
-    <span v-if="!!props.message">{{props.message}}</span>
+    <span v-if="!!props.message">{{ props.message }}</span>
   </div>
 </template>
 
 <style scoped lang="scss">
 div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   input {
     border: 1px solid $color-border-200;
     background: $color-foreground-200;
@@ -42,13 +53,30 @@ div {
   }
 
   span {
+    margin-top: 5px;
+    font-size: 0.65rem;
+    letter-spacing: 0.03rem;
+  }
 
+  label {
+    font-size: 0.7rem;
+    letter-spacing: 0.03rem;
+    color: $color-black-200;
+    margin-bottom: 8px;
   }
 
   &.error {
     span {
-      color: red;
+      color: $color-danger-100;
     }
+
+    input:focus {
+      border-color: $color-danger-100;
+    }
+  }
+
+  &.block {
+    width: 100%;
   }
 }
 </style>

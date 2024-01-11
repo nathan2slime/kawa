@@ -47,7 +47,6 @@ const onToggleOpen = (e: MouseEvent) => {
   .dialog-content {
     width: 100%;
     max-width: 500px;
-    min-height: 500px;
     border-radius: 15px;
     background: $color-foreground-200;
   }
