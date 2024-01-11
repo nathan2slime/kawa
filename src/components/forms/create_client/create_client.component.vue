@@ -8,8 +8,10 @@ import Input from '@/components/core/input/input.component.vue';
 import { getErrorMessage } from '@/utils/form';
 
 import { schema } from './utils/schema';
+import type { CreateClientProps } from '@/components/forms/create_client/create_client.model';
 
-const emit = defineEmits(['toggle-dialog']);
+const emit = defineEmits(['toggle-dialog', 'submit']);
+const props = defineProps<CreateClientProps>();
 
 const values = ref<Record<string, string>>({
   name: '',
@@ -25,17 +27,13 @@ const validate = (value: string, name: string) => {
   values.value[name] = value;
 
   const res = schema(values.value, name);
+  isValid.value = schema(values.value).isValid();
 
   errors.value = res.getErrors();
-
-  try {
-    isValid.value = schema(values.value).isValid();
-  } catch {}
 };
 
 const onSubmit = () => {
-  if (isValid) {
-  }
+  if (isValid) emit('submit', values.value);
 };
 
 onUnmounted(() => emit('toggle-dialog', false));
@@ -49,6 +47,7 @@ onUnmounted(() => emit('toggle-dialog', false));
       <Input
         :value="values.name"
         :message="getErrorMessage(errors, 'name')"
+        complete="name"
         label="Name"
         @update:value="validate"
         name="name"
@@ -60,6 +59,7 @@ onUnmounted(() => emit('toggle-dialog', false));
           :message="getErrorMessage(errors, 'document')"
           label="CPF"
           block
+          complete="off"
           maska="###.###.###-##"
           @update:value="validate"
           name="document"
@@ -69,6 +69,7 @@ onUnmounted(() => emit('toggle-dialog', false));
           :message="getErrorMessage(errors, 'phone')"
           label="Phone"
           block
+          complete="tel"
           maska="(##) # #####-####"
           @update:value="validate"
           name="phone"
@@ -79,6 +80,7 @@ onUnmounted(() => emit('toggle-dialog', false));
         :value="values.email"
         :message="getErrorMessage(errors, 'email')"
         label="Email"
+       complete="email"
         @update:value="validate"
         name="email"
       />
@@ -90,9 +92,16 @@ onUnmounted(() => emit('toggle-dialog', false));
         type="submit"
         @click="emit('toggle-dialog', false)"
         color="secondary"
-        >Cancelar
+      >
+        Cancelar
       </Button>
-      <Button block :disabled="!isValid" type="submit" color="primary">
+      <Button
+        block
+        :disabled="!isValid"
+        @click="onSubmit"
+        type="submit"
+        color="primary"
+      >
         <Save :size="22" :strokeWidth="1" />
         Save
       </Button>
@@ -108,7 +117,7 @@ onUnmounted(() => emit('toggle-dialog', false));
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 30px;
+  gap: 40px;
 
   fieldset {
     border: none;
@@ -130,7 +139,7 @@ onUnmounted(() => emit('toggle-dialog', false));
     justify-content: end;
     align-items: center;
 
-    gap: 8px;
+    gap: 10px;
 
     button {
       max-width: 120px;
@@ -146,7 +155,7 @@ onUnmounted(() => emit('toggle-dialog', false));
   > div {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
   }
 }
 </style>

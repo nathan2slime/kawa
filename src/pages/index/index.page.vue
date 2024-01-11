@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { PlusIcon } from 'lucide-vue-next';
+import { createId } from '@paralleldrive/cuid2';
 
 import CreateClient from '@/components/forms/create_client/create_client.component.vue';
 
@@ -8,9 +9,41 @@ import Navbar from '@/components/layout/navbar/navbar.component.vue';
 import Button from '@/components/core/button/button.component.vue';
 import Dialog from '@/components/core/dialog/dialog.component.vue';
 
+import type { Client, NewClient } from '@/store/client/client.types';
+import { useClientStore } from '@/store/client/client.store';
+import { useToastStore } from '@/store/toast/toast.store';
+
+const clientStore = useClientStore();
+const toast = useToastStore();
+
 const isOpenDialog = ref(false);
 
 const onToggleIsOpenDialog = (e: boolean) => (isOpenDialog.value = e);
+
+const onCreateNewClient = (client: NewClient) => {
+  const clients = clientStore.clients;
+
+  const data: Client = {
+    ...client,
+    id: createId(),
+    email: client.email.toLowerCase(),
+    phone: client.phone.replace(/\D+/g, ''),
+    document: client.document.replace(/\D+/g, ''),
+  };
+
+  const isDocumentAlreadyUsed = clients.find(
+    e => e.document == data.document,
+  );
+  const isEmailAlreadyUsed = clients.find(e => e.email == data.email);
+
+  if (isDocumentAlreadyUsed) return toast.show('CPF already used', 'danger');
+  if (isEmailAlreadyUsed) return toast.show('Email already used', 'danger');
+
+  clientStore.add(data);
+
+  onToggleIsOpenDialog(false);
+  toast.show('New user created', 'success');
+};
 </script>
 
 <template>
@@ -27,7 +60,11 @@ const onToggleIsOpenDialog = (e: boolean) => (isOpenDialog.value = e);
     </Navbar>
 
     <Dialog :open="isOpenDialog" @toggle-open="onToggleIsOpenDialog">
-      <CreateClient @toggle-dialog="onToggleIsOpenDialog" v-if="isOpenDialog" />
+      <CreateClient
+        @submit="onCreateNewClient"
+        @toggle-dialog="onToggleIsOpenDialog"
+        v-if="isOpenDialog"
+      />
     </Dialog>
   </div>
 </template>
