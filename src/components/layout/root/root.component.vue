@@ -3,7 +3,6 @@ import { RouterView } from 'vue-router';
 
 import Menu from '@/components/core/menu/menu.component.vue';
 import Toast from '@/components/core/toast/toast.component.vue';
-
 </script>
 
 <template>
