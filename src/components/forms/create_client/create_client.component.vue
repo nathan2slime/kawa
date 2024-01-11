@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { onUnmounted, ref } from 'vue';
-import { Save } from 'lucide-vue-next';
+import {onUnmounted, ref} from 'vue';
+import {Save} from 'lucide-vue-next';
 
 import Button from '@/components/core/button/button.component.vue';
 import Input from '@/components/core/input/input.component.vue';
 import Switch from '@/components/core/switch/switch.component.vue';
 
-import { getErrorMessage } from '@/utils/form';
+import {getErrorMessage} from '@/utils/form';
 
-import { schema } from './utils/schema';
-import type { CreateClientProps } from '@/components/forms/create_client/create_client.model';
+import {schema} from './utils/schema';
+import type {CreateClientProps} from '@/components/forms/create_client/create_client.model';
 
 const emit = defineEmits(['toggle-dialog', 'submit']);
 const props = defineProps<CreateClientProps>();
 
-const values = ref<Record<string, string>>({
+const values = ref({
   name: '',
   document: '',
   phone: '',
@@ -26,7 +26,7 @@ const isValid = ref();
 const errors = ref();
 
 const validate = (value: string, name: string) => {
-  values.value[name] = value;
+  (values.value as unknown as Record<string, string>)[name] = value;
 
   const res = schema(values.value, name);
   isValid.value = schema(values.value).isValid();
@@ -47,71 +47,71 @@ onUnmounted(() => emit('toggle-dialog', false));
 
     <div>
       <Input
-        :value="values.name"
-        :message="getErrorMessage(errors, 'name')"
-        complete="name"
-        label="Name"
-        @update:value="validate"
-        name="name"
+          :value="values.name"
+          :message="getErrorMessage(errors, 'name')"
+          complete="name"
+          label="Name"
+          @update:value="validate"
+          name="name"
       />
 
       <fieldset>
         <Input
-          :value="values.document"
-          :message="getErrorMessage(errors, 'document')"
-          label="CPF"
-          block
-          complete="off"
-          maska="###.###.###-##"
-          @update:value="validate"
-          name="document"
+            :value="values.document"
+            :message="getErrorMessage(errors, 'document')"
+            label="CPF"
+            block
+            complete="off"
+            maska="###.###.###-##"
+            @update:value="validate"
+            name="document"
         />
         <Input
-          :value="values.phone"
-          :message="getErrorMessage(errors, 'phone')"
-          label="Phone"
-          block
-          complete="tel"
-          maska="(##) # #####-####"
-          @update:value="validate"
-          name="phone"
+            :value="values.phone"
+            :message="getErrorMessage(errors, 'phone')"
+            label="Phone"
+            block
+            complete="tel"
+            maska="(##) # #####-####"
+            @update:value="validate"
+            name="phone"
         />
       </fieldset>
 
       <Input
-        :value="values.email"
-        :message="getErrorMessage(errors, 'email')"
-        label="Email"
-        complete="email"
-        @update:value="validate"
-        name="email"
+          :value="values.email"
+          :message="getErrorMessage(errors, 'email')"
+          label="Email"
+          complete="email"
+          @update:value="validate"
+          name="email"
       />
 
       <Switch
-        label="Active"
-        :active="values.active"
-        name="active"
-        @update:active="validate"
+          label="Active"
+          :active="values.active"
+          name="active"
+          @update:active="validate"
       />
     </div>
 
     <footer>
       <Button
-        block
-        type="submit"
-        @click="emit('toggle-dialog', false)"
-        color="secondary"
+          block
+          type="submit"
+          @click="emit('toggle-dialog', false)"
+          color="secondary"
       >
         Cancelar
       </Button>
       <Button
-        block
-        :disabled="!isValid"
-        @click="onSubmit"
-        type="submit"
-        color="primary"
+          block
+          :disabled="!isValid"
+          @click="onSubmit"
+          type="submit"
+          color="primary"
       >
-        <Save :size="22" :strokeWidth="1" />
+        <Save :size="22" :strokeWidth="1"/>
         Save
       </Button>
     </footer>
