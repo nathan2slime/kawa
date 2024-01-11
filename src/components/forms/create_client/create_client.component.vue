@@ -93,13 +93,6 @@ onUnmounted(() => emit('toggle-dialog', false));
         name="active"
         @update:active="validate"
       />
-
-      <Switch
-        label="Active"
-        :active="values.active"
-        name="active"
-        @update:active="validate"
-      />
     </div>
 
     <footer>
