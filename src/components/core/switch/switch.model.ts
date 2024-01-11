@@ -1,5 +1,5 @@
 export type SwitchProps = {
-    active: boolean;
-    name?: string;
-    label?: string
-}
+  active: boolean;
+  name?: string;
+  label?: string;
+};

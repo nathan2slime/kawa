@@ -10,10 +10,10 @@ export const useToastStore = defineStore('toast', {
   }),
   getters: {},
   actions: {
-    show(title: string,status: ToastStatus) {
+    show(title: string, status: ToastStatus) {
       this.status = status;
       this.open = true;
-    this.title = title;
+      this.title = title;
 
       setTimeout(() => {
         this.open = false;

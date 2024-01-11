@@ -19,7 +19,7 @@ const model = computed({
 
 <template>
   <div :class="{ error: !!props.message, block: props.block }">
-    <label v-if="props.label" :for="props.name">{{label}}</label>
+    <label v-if="props.label" :for="props.name">{{ label }}</label>
     <input
       v-maska
       :id="props.name"

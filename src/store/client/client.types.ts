@@ -7,6 +7,7 @@ export type NewClient = {
 
 export type Client = {
   id: string;
+  created_at: string;
 } & NewClient;
 
 export type ClientState = {
