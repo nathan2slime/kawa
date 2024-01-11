@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { vMaska } from 'maska';
+import { computed } from 'vue';
 
 import type { InputProps } from './input.model';
-import { computed } from 'vue';
 
 const props = defineProps<InputProps>();
 const emit = defineEmits(['update:value']);
