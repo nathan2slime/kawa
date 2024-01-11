@@ -5,11 +5,11 @@ import { Save } from 'lucide-vue-next';
 import Button from '@/components/core/button/button.component.vue';
 import Input from '@/components/core/input/input.component.vue';
 import Switch from '@/components/core/switch/switch.component.vue';
+import type { CreateClientProps } from './create_client.model';
 
 import { getErrorMessage } from '@/utils/form';
 
 import { schema } from './utils/schema';
-import type { CreateClientProps } from '@/components/forms/create_client/create_client.model';
 
 const emit = defineEmits(['toggle-dialog', 'submit']);
 const props = defineProps<CreateClientProps>();
@@ -66,6 +66,7 @@ onUnmounted(() => emit('toggle-dialog', false));
           @update:value="validate"
           name="document"
         />
+
         <Input
           :value="values.phone"
           :message="getErrorMessage(errors, 'phone')"

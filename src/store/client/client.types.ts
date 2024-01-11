@@ -3,6 +3,7 @@ export type NewClient = {
   document: string;
   name: string;
   email: string;
+  active: boolean
 };
 
 export type Client = {
