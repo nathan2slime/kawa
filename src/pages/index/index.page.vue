@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { PlusIcon } from 'lucide-vue-next';
 import { createId } from '@paralleldrive/cuid2';
 
@@ -17,7 +17,7 @@ import { useToastStore } from '@/store/toast/toast.store';
 
 const clientStore = useClientStore();
 const toast = useToastStore();
-const clients = clientStore.clients;
+const clients = computed(() => clientStore.clients);
 
 const isOpenDialog = ref(false);
 
@@ -33,8 +33,10 @@ const onCreateNewClient = (client: NewClient) => {
     document: client.document.replace(/\D+/g, ''),
   };
 
-  const isDocumentAlreadyUsed = clients.find(e => e.document == data.document);
-  const isEmailAlreadyUsed = clients.find(e => e.email == data.email);
+  const isDocumentAlreadyUsed = clients.value.find(
+    e => e.document == data.document,
+  );
+  const isEmailAlreadyUsed = clients.value.find(e => e.email == data.email);
 
   if (isDocumentAlreadyUsed) return toast.show('CPF already used', 'danger');
   if (isEmailAlreadyUsed) return toast.show('Email already used', 'danger');
@@ -59,12 +61,10 @@ const onCreateNewClient = (client: NewClient) => {
       </Button>
     </Navbar>
 
-    <Dropdown open name="dropdown" />
-
-    <div>
+    <div class="clients">
       <CardClient v-for="client in clients" :key="client.id" :data="client" />
     </div>
-    <button app-dropdown="dropdown">KKK</button>
+
     <Dialog :open="isOpenDialog" @toggle-open="onToggleIsOpenDialog">
       <CreateClient
         @submit="onCreateNewClient"
@@ -78,15 +78,30 @@ const onCreateNewClient = (client: NewClient) => {
 <style scoped lang="scss">
 .index-page {
   width: 100%;
+  height: 100vh;
+  overflow-y: auto;
 
   header {
     display: flex;
     justify-content: flex-end;
+
+    position: sticky;
+    top: 0px;
+    z-index: 20;
   }
 
   .add-client {
     width: 100%;
     max-width: 95px;
+  }
+
+  .clients {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    padding: 20px;
   }
 }
 </style>

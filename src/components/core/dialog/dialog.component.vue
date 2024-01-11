@@ -37,6 +37,7 @@ const onToggleOpen = (e: MouseEvent) => {
   opacity: 0;
   transition: opacity 0.14s;
   pointer-events: none;
+  z-index: 30;
 
   display: flex;
   justify-content: center;
