@@ -11,16 +11,16 @@ describe('button', () => {
   });
 
   it('must receive block property and apply block class', () => {
-    const wrapper = mount(Button, { props: { block: true }})
+    const wrapper = mount(Button, { props: { block: true } });
 
-    expect(wrapper.props().block).toBe(true)
-    expect(wrapper.classes()).toContain('block')
-  })
+    expect(wrapper.props().block).toBe(true);
+    expect(wrapper.classes()).toContain('block');
+  });
 
   it('must receive disabled property and apply disabled class', () => {
-    const wrapper = mount(Button, { props: { disabled: true }})
+    const wrapper = mount(Button, { props: { disabled: true } });
 
-    expect(wrapper.props().disabled).toBe(true)
-    expect(wrapper.classes()).toContain('disabled')
-  })
+    expect(wrapper.props().disabled).toBe(true);
+    expect(wrapper.classes()).toContain('disabled');
+  });
 });

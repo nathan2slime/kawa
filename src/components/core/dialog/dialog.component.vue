@@ -42,6 +42,8 @@ const onToggleOpen = (e: MouseEvent) => {
   justify-content: center;
   align-items: center;
 
+  padding: 20px;
+
   .dialog-content {
     width: 100%;
     max-width: 500px;
