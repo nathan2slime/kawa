@@ -27,7 +27,7 @@ const onToggleIsOpenDialog = (e: boolean) => (isOpenDialog.value = e);
     </Navbar>
 
     <Dialog :open="isOpenDialog" @toggle-open="onToggleIsOpenDialog">
-      <CreateClient />
+      <CreateClient @toggle-dialog="onToggleIsOpenDialog" v-if="isOpenDialog" />
     </Dialog>
   </div>
 </template>
