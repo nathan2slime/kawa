@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 import { PlusIcon } from 'lucide-vue-next';
 
+import CreateClient from '@/components/forms/create_client/create_client.component.vue';
+
 import Navbar from '@/components/layout/navbar/navbar.component.vue';
 import Button from '@/components/core/button/button.component.vue';
 import Dialog from '@/components/core/dialog/dialog.component.vue';
@@ -24,7 +26,9 @@ const onToggleIsOpenDialog = (e: boolean) => (isOpenDialog.value = e);
       </Button>
     </Navbar>
 
-    <Dialog :open="isOpenDialog" @toggle-open="onToggleIsOpenDialog" />
+    <Dialog :open="isOpenDialog" @toggle-open="onToggleIsOpenDialog">
+      <CreateClient />
+    </Dialog>
   </div>
 </template>
 
