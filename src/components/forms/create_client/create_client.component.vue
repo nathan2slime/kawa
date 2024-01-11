@@ -18,6 +18,7 @@ const values = ref<Record<string, string>>({
   email: '',
 });
 
+const isValid = ref();
 const errors = ref();
 
 const validate = (value: string, name: string) => {
@@ -26,6 +27,15 @@ const validate = (value: string, name: string) => {
   const res = schema(values.value, name);
 
   errors.value = res.getErrors();
+
+  try {
+    isValid.value = schema(values.value).isValid();
+  } catch {}
+};
+
+const onSubmit = () => {
+  if (isValid) {
+  }
 };
 
 onUnmounted(() => emit('toggle-dialog', false));
@@ -80,9 +90,9 @@ onUnmounted(() => emit('toggle-dialog', false));
         type="submit"
         @click="emit('toggle-dialog', false)"
         color="secondary"
-        >Cancelar</Button
-      >
-      <Button block type="submit" color="primary">
+        >Cancelar
+      </Button>
+      <Button block :disabled="!isValid" type="submit" color="primary">
         <Save :size="22" :strokeWidth="1" />
         Save
       </Button>
@@ -103,9 +113,14 @@ onUnmounted(() => emit('toggle-dialog', false));
   fieldset {
     border: none;
     display: flex;
+    flex-direction: column;
     align-items: baseline;
     width: 100%;
     gap: 8px;
+
+    @include query('sm') {
+      flex-direction: row;
+    }
   }
 
   footer {
