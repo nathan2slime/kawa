@@ -35,7 +35,7 @@ const onToggleOpen = (e: MouseEvent) => {
 
   background: $color-black-alpha-100;
   opacity: 0;
-  transition: all 0.14s;
+  transition: opacity 0.14s;
   pointer-events: none;
 
   display: flex;

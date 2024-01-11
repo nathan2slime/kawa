@@ -20,6 +20,7 @@ export default defineConfig({
         additionalData: `
           @import "@/global/variables.scss";
           @import "@/global/functions.scss";
+          @import "@/global/breakpoints.scss";
         `,
       },
     },

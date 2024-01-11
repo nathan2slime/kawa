@@ -58,7 +58,7 @@ button {
   }
 
   &.disabled {
-    background: $color-disabled-100;
+    background: $color-primary-solid-200;
     pointer-events: none;
     cursor: default;
   }
