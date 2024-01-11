@@ -6,7 +6,7 @@ const props = defineProps<CardClientProps>();
 
 <template>
   <div class="card-client">
-    <h4>{{ props.data.name}}</h4>
+    <h4>{{ props.data.name }}</h4>
   </div>
 </template>
 
@@ -15,7 +15,5 @@ const props = defineProps<CardClientProps>();
   width: 100%;
   border: 1px solid $color-border-200;
   border-radius: 8px;
-
-
 }
 </style>

@@ -24,7 +24,6 @@ const isOpenDialog = ref(false);
 const onToggleIsOpenDialog = (e: boolean) => (isOpenDialog.value = e);
 
 const onCreateNewClient = (client: NewClient) => {
-
   const data: Client = {
     ...client,
     id: createId(),
@@ -65,7 +64,7 @@ const onCreateNewClient = (client: NewClient) => {
     <div>
       <CardClient v-for="client in clients" :key="client.id" :data="client" />
     </div>
-  <button app-dropdown="dropdown">KKK</button>
+    <button app-dropdown="dropdown">KKK</button>
     <Dialog :open="isOpenDialog" @toggle-open="onToggleIsOpenDialog">
       <CreateClient
         @submit="onCreateNewClient"

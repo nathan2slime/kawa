@@ -70,7 +70,9 @@ onUnmounted(() => {
   position: fixed;
   opacity: 0;
   transform: scale(0.9);
-  transition: transform 0.1s, opacity 0.2s;
+  transition:
+    transform 0.1s,
+    opacity 0.2s;
 
   &.open {
     transform: scale(1);
