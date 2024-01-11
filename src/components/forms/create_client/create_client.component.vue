@@ -4,6 +4,7 @@ import { Save } from 'lucide-vue-next';
 
 import Button from '@/components/core/button/button.component.vue';
 import Input from '@/components/core/input/input.component.vue';
+import Switch from '@/components/core/switch/switch.component.vue';
 
 import { getErrorMessage } from '@/utils/form';
 
@@ -18,6 +19,7 @@ const values = ref<Record<string, string>>({
   document: '',
   phone: '',
   email: '',
+  active: false,
 });
 
 const isValid = ref();
@@ -80,9 +82,16 @@ onUnmounted(() => emit('toggle-dialog', false));
         :value="values.email"
         :message="getErrorMessage(errors, 'email')"
         label="Email"
-       complete="email"
+        complete="email"
         @update:value="validate"
         name="email"
+      />
+
+      <Switch
+        label="Active"
+        :active="values.active"
+        name="active"
+        @update:active="validate"
       />
     </div>
 
