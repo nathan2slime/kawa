@@ -14,7 +14,13 @@ const onToggleIsOpenDrawer = (e: boolean) => {
 
 <template>
   <nav class="app-navbar">
-    <img src="@/assets/favicon.svg" class="favicon" />
+    <img
+      src="@/assets/favicon.svg"
+      width="40"
+      height="40"
+      alt="Kawa"
+      class="favicon"
+    />
 
     <MenuIcon
       class="toggle-menu"
@@ -24,7 +30,7 @@ const onToggleIsOpenDrawer = (e: boolean) => {
     />
   </nav>
 
-  <Drawer :open="isOpenDrawer" @on:close="onToggleIsOpenDrawer">
+  <Drawer :open="isOpenDrawer" @on:close="() => onToggleIsOpenDrawer(false)">
     <Menu @on:change="() => onToggleIsOpenDrawer(false)" />
   </Drawer>
 </template>

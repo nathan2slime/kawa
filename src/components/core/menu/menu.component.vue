@@ -39,7 +39,13 @@ onMounted(() => {
 
 <template>
   <aside class="app-menu">
-    <img src="@/assets/favicon.svg" class="favicon" />
+    <img
+      src="@/assets/favicon.svg"
+      width="50"
+      height="50"
+      alt="Kawa"
+      class="favicon"
+    />
 
     <div class="menu-items">
       <router-link

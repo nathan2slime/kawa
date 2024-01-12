@@ -127,7 +127,7 @@ const onToggleActiveProduct = (product: Product) => {
 
   .not-found {
     font-size: 0.8rem;
-    color: $color-black-alpha-100;
+    color: $color-black-200;
     margin: auto;
     padding: 20px;
   }
