@@ -38,7 +38,7 @@ export const useClientStore = defineStore('client', {
           );
 
           if (!!alreadyInStock) return e;
-          console.log(product)
+
           return { ...e, products: [...(e.products || []), product.id] };
         }
 
