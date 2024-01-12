@@ -34,7 +34,8 @@ const errors = ref();
 const currentProduct = ref<Product | null>();
 
 const products = computed(() => {
-  if (currentProduct.value?.name === values.value.search) return;
+  if (currentProduct.value && currentProduct.value.name === values.value.search)
+    return;
 
   const clientProducts = props.client.products || [];
   const productsNoIncluded = productStore.products.filter(
