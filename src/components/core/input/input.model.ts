@@ -6,5 +6,7 @@ export type InputProps = {
   label?: string;
   block?: boolean;
   complete?: string;
+  disabled?: boolean;
   warnings?: string[];
+  placeholder?: string;
 };

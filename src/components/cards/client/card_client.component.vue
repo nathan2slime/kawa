@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { format } from 'date-fns';
-import { EditIcon, MoreVertical, EyeIcon, EyeOffIcon } from 'lucide-vue-next';
+import {
+  EditIcon,
+  MoreVertical,
+  PlusCircle,
+  EyeIcon,
+  EyeOffIcon,
+} from 'lucide-vue-next';
 
 import Dropdown from '@/components/core/dropdown/dropdown.component.vue';
 import DropdownItem from '@/components/core/dropdown-item/dropdown-item.component.vue';
@@ -9,7 +15,7 @@ import DropdownItem from '@/components/core/dropdown-item/dropdown-item.componen
 import type { CardClientProps } from './card_client.model';
 
 const { data } = defineProps<CardClientProps>();
-const emit = defineEmits(['on-edit', 'update:active']);
+const emit = defineEmits(['on:edit', 'update:active', 'on:add']);
 
 const isOpenOption = ref(false);
 
@@ -30,7 +36,7 @@ const onToggleOpen = (e: boolean) => {
         @click="
           () => {
             onToggleOpen(false);
-            emit('on-edit');
+            emit('on:edit');
           }
         "
       >
@@ -52,6 +58,18 @@ const onToggleOpen = (e: boolean) => {
           :strokeWidth="1"
         />
         {{ data.active ? 'Inactive' : 'Active' }}
+      </DropdownItem>
+
+      <DropdownItem
+        @click="
+          () => {
+            onToggleOpen(false);
+            emit('on:add');
+          }
+        "
+      >
+        <PlusCircle :width="18" :strokeWidth="1" />
+        Add product
       </DropdownItem>
     </Dropdown>
 

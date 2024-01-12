@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import { PlusIcon } from 'lucide-vue-next';
 import { createId } from '@paralleldrive/cuid2';
 
+import AddProductToClient from '@/components/forms/add_product_to_client/add_product_to_client.component.vue';
 import CreateClient from '@/components/forms/create_client/create_client.component.vue';
 import Header from '@/components/layout/header/header.component.vue';
 import Button from '@/components/core/button/button.component.vue';
@@ -17,19 +18,26 @@ const clientStore = useClientStore();
 const toast = useToastStore();
 
 const customerEditData = ref<Client | undefined>();
+const customerToAddProduct = ref<Client | undefined>();
 const clients = computed(() => clientStore.clients);
 
-const isOpenDialog = ref(false);
+const isOpenDialogCreateClient = ref(false);
+const isOpenDialogAddProductToClient = ref(false);
 
-const onToggleIsOpenDialog = (e: boolean) => {
+const onToggleIsOpenDialogCreateClient = (e: boolean) => {
   if (!e) customerEditData.value = undefined;
 
-  isOpenDialog.value = e;
+  isOpenDialogCreateClient.value = e;
 };
 
 const onRequestEditClient = (client: Client) => {
   customerEditData.value = { ...client };
-  isOpenDialog.value = true;
+  isOpenDialogCreateClient.value = true;
+};
+
+const onRequestAddProductToClient = (client: Client) => {
+  onToggleIsOpenDialogAddProductToClient(true);
+  customerToAddProduct.value = client;
 };
 
 const onCreateNewClient = (client: NewClient) => {
@@ -52,7 +60,7 @@ const onCreateNewClient = (client: NewClient) => {
 
   clientStore.add(data);
 
-  onToggleIsOpenDialog(false);
+  onToggleIsOpenDialogCreateClient(false);
   toast.show('New user created', 'success');
 };
 
@@ -67,11 +75,15 @@ const onUpdateClient = (client: Client) => {
   };
 
   clientStore.edit(data);
-  onToggleIsOpenDialog(false);
+  onToggleIsOpenDialogCreateClient(false);
 };
 
 const onToggleActiveClient = (client: Client) => {
   clientStore.toggleActive(client);
+};
+
+const onToggleIsOpenDialogAddProductToClient = (e: boolean) => {
+  isOpenDialogAddProductToClient.value = e;
 };
 </script>
 
@@ -83,7 +95,7 @@ const onToggleActiveClient = (client: Client) => {
       <Button
         block
         class="add-client"
-        @click="() => onToggleIsOpenDialog(true)"
+        @click="() => onToggleIsOpenDialogCreateClient(true)"
       >
         <PlusIcon :size="20" :strokeWidth="1" />
         New
@@ -95,21 +107,36 @@ const onToggleActiveClient = (client: Client) => {
         v-for="client in clients"
         :key="client.id"
         :data="client"
-        @on-edit="() => onRequestEditClient(client)"
+        @on:add="() => onRequestAddProductToClient(client)"
+        @on:edit="() => onRequestEditClient(client)"
         @update:active="() => onToggleActiveClient(client)"
       />
     </div>
 
-    <Dialog :open="isOpenDialog" @toggle-open="onToggleIsOpenDialog">
+    <Dialog
+      :open="isOpenDialogCreateClient"
+      @toggle-open="onToggleIsOpenDialogCreateClient"
+    >
       <CreateClient
         :data="customerEditData"
-        @submit="
+        @on:submit="
           e => {
             customerEditData ? onUpdateClient(e) : onCreateNewClient(e);
           }
         "
-        @toggle-dialog="onToggleIsOpenDialog"
-        v-if="isOpenDialog"
+        @on:close="onToggleIsOpenDialogCreateClient"
+        v-if="isOpenDialogCreateClient"
+      />
+    </Dialog>
+
+    <Dialog
+      :open="isOpenDialogAddProductToClient"
+      @toggle-open="onToggleIsOpenDialogAddProductToClient"
+    >
+      <AddProductToClient
+        v-if="isOpenDialogAddProductToClient"
+        :client="customerToAddProduct"
+        @on:close="onToggleIsOpenDialogAddProductToClient"
       />
     </Dialog>
   </div>

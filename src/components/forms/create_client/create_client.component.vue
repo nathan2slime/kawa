@@ -1,29 +1,29 @@
 <script setup lang="ts">
-import { onUnmounted, ref } from 'vue';
-import { Save } from 'lucide-vue-next';
+import {onUnmounted, ref} from 'vue';
+import {Save} from 'lucide-vue-next';
 
 import Button from '@/components/core/button/button.component.vue';
 import Input from '@/components/core/input/input.component.vue';
 import Switch from '@/components/core/switch/switch.component.vue';
-import type { CreateClientProps } from './create_client.model';
+import type {CreateClientProps} from './create_client.model';
 
-import { getErrorMessage } from '@/utils/form';
+import {getErrorMessage} from '@/utils/form';
 
-import { schema } from './utils/schema';
+import {schema} from './utils/schema';
 
-const emit = defineEmits(['toggle-dialog', 'submit']);
+const emit = defineEmits(['on:close', 'on:submit']);
 const props = defineProps<CreateClientProps>();
 
 const values = ref(
-  props.data
-    ? props.data
-    : {
-        name: '',
-        document: '',
-        phone: '',
-        email: '',
-        active: false,
-      },
+    props.data
+        ? props.data
+        : {
+          name: '',
+          document: '',
+          phone: '',
+          email: '',
+          active: false,
+        },
 );
 
 const isValid = ref();
@@ -39,10 +39,10 @@ const validate = (value: string, name: string) => {
 };
 
 const onSubmit = () => {
-  if (isValid) emit('submit', values.value);
+  if (isValid) emit('on:submit', values.value);
 };
 
-onUnmounted(() => emit('toggle-dialog', false));
+onUnmounted(() => emit('on:close', false));
 </script>
 
 <template>
@@ -104,7 +104,7 @@ onUnmounted(() => emit('toggle-dialog', false));
       <Button
         block
         type="submit"
-        @click="emit('toggle-dialog', false)"
+        @click="emit('on:close', false)"
         color="secondary"
       >
         Cancelar

@@ -18,14 +18,16 @@ const model = computed({
 </script>
 
 <template>
-  <div :class="{ error: !!props.message, block: props.block }">
+  <div :class="{ error: !!props.message, disabled: props.disabled, block: props.block }">
     <label v-if="props.label" :for="props.name">{{ label }}</label>
     <input
       v-maska
       :id="props.name"
       :name="props.name"
       :data-maska="props.maska"
+      :disabled="props.disabled"
       :autocomplete="props.complete"
+      :placeholder="props.placeholder"
       v-model="model"
     />
 
@@ -74,6 +76,10 @@ div {
     input:focus {
       border-color: $color-danger-100;
     }
+  }
+
+  &.disabled input {
+    opacity: 0.7;
   }
 
   &.block {
