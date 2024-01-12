@@ -14,13 +14,17 @@ import { schema } from './utils/schema';
 const emit = defineEmits(['toggle-dialog', 'submit']);
 const props = defineProps<CreateClientProps>();
 
-const values = ref({
-  name: '',
-  document: '',
-  phone: '',
-  email: '',
-  active: false,
-});
+const values = ref(
+  props.data
+    ? props.data
+    : {
+        name: '',
+        document: '',
+        phone: '',
+        email: '',
+        active: false,
+      },
+);
 
 const isValid = ref();
 const errors = ref();
@@ -43,7 +47,7 @@ onUnmounted(() => emit('toggle-dialog', false));
 
 <template>
   <form @submit.prevent="() => {}" class="create_client">
-    <h1>New client</h1>
+    <h1>{{ props.data ? 'Edit client' : 'New client' }}</h1>
 
     <div>
       <Input

@@ -8,51 +8,55 @@ import DropdownItem from '@/components/core/dropdown-item/dropdown-item.componen
 
 import type { CardClientProps } from './card_client.model';
 
-const props = defineProps<CardClientProps>();
+const { data } = defineProps<CardClientProps>();
+const emit = defineEmits(['on-edit', 'update:active']);
 
 const isOpenOption = ref(false);
 
 const onToggleOpen = (e: boolean) => {
   isOpenOption.value = e;
 };
-
-const options = [
-  {
-    icon: EditIcon,
-    title: 'Edit',
-  },
-  {
-    icon: props.data.active ? EyeOffIcon : EyeIcon,
-    title: props.data.active ? 'Inactive' : 'Active',
-  },
-];
 </script>
 
 <template>
-  <div class="card-client">
-    <h4>{{ props.data.name }}</h4>
+  <div :class="{ 'card-client': true, active: data.active }">
+    <h4>{{ data.name }}</h4>
 
-    <p>{{ props.data.email }}</p>
+    <p>{{ data.email }}</p>
 
-    <span>{{ format(props.data.created_at, 'dd/MM/yyyy') }}</span>
+    <span>{{ format(data.created_at, 'dd/MM/yyyy') }}</span>
+    <Dropdown @update:open="onToggleOpen" :name="data.id" :open="isOpenOption">
+      <DropdownItem
+        @click="
+          () => {
+            onToggleOpen(false);
+            emit('on-edit');
+          }
+        "
+      >
+        <EditIcon :width="18" :strokeWidth="1" />
+        Edit
+      </DropdownItem>
 
-    <Dropdown
-      @update:open="onToggleOpen"
-      :name="props.data.id"
-      :open="isOpenOption"
-    >
-      <DropdownItem v-for="option in options">
-        <component :is="option.icon" :width="18" :strokeWidth="1" />
-        {{ option.title }}
+      <DropdownItem
+        @click="
+          () => {
+            onToggleOpen(false);
+            emit('update:active');
+          }
+        "
+      >
+        <component
+          :is="data.active ? EyeOffIcon : EyeIcon"
+          :width="18"
+          :strokeWidth="1"
+        />
+        {{ data.active ? 'Inactive' : 'Active' }}
       </DropdownItem>
     </Dropdown>
 
     <div class="trigger-dropdown">
-      <MoreVertical
-        :app-dropdown="props.data.id"
-        :width="23"
-        :strokeWidth="1"
-      />
+      <MoreVertical :app-dropdown="data.id" :width="23" :strokeWidth="1" />
     </div>
   </div>
 </template>
@@ -65,9 +69,10 @@ const options = [
   border-radius: 8px;
   position: relative;
   padding: 12px;
+  background: $color-inactive-100;
 
   @include query('sm') {
-    max-width: 250px;
+    max-width: 230px;
   }
 
   h4 {
@@ -107,6 +112,11 @@ const options = [
     &:hover svg {
       color: $color-primary-solid-100;
     }
+  }
+
+  &.active {
+    opacity: 1;
+    background: $color-foreground-200;
   }
 }
 </style>

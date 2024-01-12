@@ -18,6 +18,16 @@ export const useClientStore = defineStore('client', {
     add(client: Client) {
       this.data = [...this.data, client];
     },
+    edit(client: Client) {
+      this.data = this.data.map(e =>
+        e.id == client.id ? { ...client, id: e.id } : e,
+      );
+    },
+    toggleActive(client: Client) {
+      this.data = this.data.map(e =>
+        e.id == client.id ? { ...e, active: !e.active } : e,
+      );
+    },
   },
   persist: true,
 });
