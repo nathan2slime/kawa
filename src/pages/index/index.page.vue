@@ -4,7 +4,7 @@ import { PlusIcon } from 'lucide-vue-next';
 import { createId } from '@paralleldrive/cuid2';
 
 import CreateClient from '@/components/forms/create_client/create_client.component.vue';
-import Navbar from '@/components/layout/navbar/navbar.component.vue';
+import Header from '@/components/layout/header/header.component.vue';
 import Button from '@/components/core/button/button.component.vue';
 import Dialog from '@/components/core/dialog/dialog.component.vue';
 import CardClient from '@/components/cards/client/card_client.component.vue';
@@ -77,7 +77,7 @@ const onToggleActiveClient = (client: Client) => {
 
 <template>
   <div class="index-page">
-    <Navbar>
+    <Header>
       <Button
         block
         class="add-client"
@@ -86,7 +86,7 @@ const onToggleActiveClient = (client: Client) => {
         <PlusIcon :size="20" :strokeWidth="1" />
         New
       </Button>
-    </Navbar>
+    </Header>
 
     <div class="clients">
       <CardClient

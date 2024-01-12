@@ -1,13 +1,13 @@
 <script setup lang="ts"></script>
 
 <template>
-  <header class="app-navbar">
+  <header class="app-header">
     <slot />
   </header>
 </template>
 
 <style scoped lang="scss">
-.app-navbar {
+.app-header {
   width: 100%;
   height: 60px;
   padding: 10px 12px;

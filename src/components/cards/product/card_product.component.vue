@@ -6,9 +6,9 @@ import { EditIcon, MoreVertical, EyeIcon, EyeOffIcon } from 'lucide-vue-next';
 import Dropdown from '@/components/core/dropdown/dropdown.component.vue';
 import DropdownItem from '@/components/core/dropdown-item/dropdown-item.component.vue';
 
-import type { CardClientProps } from './card_client.model';
+import type { CardProductProps } from './card_product.model';
 
-const { data } = defineProps<CardClientProps>();
+const { data } = defineProps<CardProductProps>();
 const emit = defineEmits(['on-edit', 'update:active']);
 
 const isOpenOption = ref(false);
@@ -19,12 +19,11 @@ const onToggleOpen = (e: boolean) => {
 </script>
 
 <template>
-  <div :class="{ 'card-client': true, active: data.active }">
+  <div :class="{ 'card-product': true, active: data.active }">
     <h4>{{ data.name }}</h4>
 
-    <p>{{ data.email }}</p>
-
     <span>{{ format(data.created_at, 'dd/MM/yyyy') }}</span>
+
     <Dropdown @update:open="onToggleOpen" :name="data.id" :open="isOpenOption">
       <DropdownItem
         @click="
@@ -62,7 +61,7 @@ const onToggleOpen = (e: boolean) => {
 </template>
 
 <style scoped lang="scss">
-.card-client {
+.card-product {
   width: 100%;
   max-width: 100%;
   border: 1px solid $color-border-200;
@@ -81,20 +80,15 @@ const onToggleOpen = (e: boolean) => {
     color: $color-black-200;
   }
 
-  p {
-    font-size: 0.8rem;
-    margin-top: 5px;
-    color: $color-black-alpha-100;
-  }
-
   span {
     padding: 2px 4px;
     border-radius: 5px;
     font-size: 0.7rem;
     display: block;
-    margin-top: 10px;
+    margin-top: 8px;
     width: fit-content;
     color: $color-white-200;
+
     background: $color-danger-100;
   }
 
