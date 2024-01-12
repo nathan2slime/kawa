@@ -18,16 +18,17 @@ const onHanldeClick = (e: MouseEvent) => {
     (element: HTMLElement) => element == wrapper.value,
   );
 
-  console.log(isInsideContainer);
   const positions = trigger.getBoundingClientRect();
+
   if (!isInsideContainer && props.open) return emit('update:open', false);
+
   if (isMatchDropdown) {
-    getValidPosition(positions, wrapper.value);
+    setValidPosition(positions, wrapper.value);
     emit('update:open', true);
   }
 };
 
-const getValidPosition = (rect: DOMRect, target: HTMLElement) => {
+const setValidPosition = (rect: DOMRect, target: HTMLElement) => {
   const clientHeight = document.documentElement.clientHeight;
   const clientWidth = document.documentElement.clientWidth;
 

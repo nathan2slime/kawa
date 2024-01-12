@@ -4,9 +4,7 @@ import { PlusIcon } from 'lucide-vue-next';
 import { createId } from '@paralleldrive/cuid2';
 
 import CreateClient from '@/components/forms/create_client/create_client.component.vue';
-
 import Navbar from '@/components/layout/navbar/navbar.component.vue';
-import Dropdown from '@/components/core/dropdown/dropdown.component.vue';
 import Button from '@/components/core/button/button.component.vue';
 import Dialog from '@/components/core/dialog/dialog.component.vue';
 import CardClient from '@/components/cards/client/card_client.component.vue';
@@ -17,11 +15,22 @@ import { useToastStore } from '@/store/toast/toast.store';
 
 const clientStore = useClientStore();
 const toast = useToastStore();
+
+const customerEditData = ref<Client | undefined>();
 const clients = computed(() => clientStore.clients);
 
 const isOpenDialog = ref(false);
 
-const onToggleIsOpenDialog = (e: boolean) => (isOpenDialog.value = e);
+const onToggleIsOpenDialog = (e: boolean) => {
+  if (!e) customerEditData.value = undefined;
+
+  isOpenDialog.value = e;
+};
+
+const onRequestEditClient = (client: Client) => {
+  customerEditData.value = { ...client };
+  isOpenDialog.value = true;
+};
 
 const onCreateNewClient = (client: NewClient) => {
   const data: Client = {
@@ -46,6 +55,24 @@ const onCreateNewClient = (client: NewClient) => {
   onToggleIsOpenDialog(false);
   toast.show('New user created', 'success');
 };
+
+const onUpdateClient = (client: Client) => {
+  const data: Client = {
+    ...customerEditData.value,
+    ...client,
+    email: client.email.toLowerCase(),
+    created_at: new Date().toString(),
+    phone: client.phone.replace(/\D+/g, ''),
+    document: client.document.replace(/\D+/g, ''),
+  };
+
+  clientStore.edit(data)
+  onToggleIsOpenDialog(false)
+};
+
+const onToggleActiveClient = (client: Client) => {
+  clientStore.toggleActive(client);
+};
 </script>
 
 <template>
@@ -62,12 +89,23 @@ const onCreateNewClient = (client: NewClient) => {
     </Navbar>
 
     <div class="clients">
-      <CardClient v-for="client in clients" :key="client.id" :data="client" />
+      <CardClient
+        v-for="client in clients"
+        :key="client.id"
+        :data="client"
+        @on-edit="() => onRequestEditClient(client)"
+        @update:active="() => onToggleActiveClient(client)"
+      />
     </div>
 
     <Dialog :open="isOpenDialog" @toggle-open="onToggleIsOpenDialog">
       <CreateClient
-        @submit="onCreateNewClient"
+        :data="customerEditData"
+        @submit="
+          e => {
+            customerEditData ? onUpdateClient(e) : onCreateNewClient(e);
+          }
+        "
         @toggle-dialog="onToggleIsOpenDialog"
         v-if="isOpenDialog"
       />
