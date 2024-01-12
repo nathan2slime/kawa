@@ -75,13 +75,15 @@ const onToggleActiveProduct = (product: Product) => {
       </Button>
     </Header>
 
+    <p class="not-found" v-if="products.length == 0">No registered products</p>
+
     <div class="products">
       <CardProduct
-        v-for="client in products"
-        :key="client.id"
-        :data="client"
-        @on:edit="() => onRequestEditProduct(client)"
-        @update:active="() => onToggleActiveProduct(client)"
+        v-for="product in products"
+        :key="product.id"
+        :data="product"
+        @on:edit="() => onRequestEditProduct(product)"
+        @update:active="() => onToggleActiveProduct(product)"
       />
     </div>
 
@@ -121,6 +123,13 @@ const onToggleActiveProduct = (product: Product) => {
   .add-product {
     width: 100%;
     max-width: 95px;
+  }
+
+  .not-found {
+    font-size: 0.8rem;
+    color: $color-black-alpha-100;
+    margin: auto;
+    padding: 20px;
   }
 
   .products {

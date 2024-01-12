@@ -82,7 +82,7 @@ const onUpdateClient = (client: Client) => {
 
 const onAddProductToClient = (client: Client, product: Product) => {
   clientStore.addProduct(client, product);
-  onToggleIsOpenDialogAddProductToClient(false)
+  onToggleIsOpenDialogAddProductToClient(false);
 };
 
 const onToggleActiveClient = (client: Client) => {
@@ -108,6 +108,8 @@ const onToggleIsOpenDialogAddProductToClient = (e: boolean) => {
         New
       </Button>
     </Header>
+
+    <p class="not-found" v-if="clients.length == 0">No registered customers</p>
 
     <div class="clients">
       <CardClient
@@ -171,6 +173,13 @@ const onToggleIsOpenDialogAddProductToClient = (e: boolean) => {
   .add-client {
     width: 100%;
     max-width: 95px;
+  }
+
+  .not-found {
+    font-size: 0.8rem;
+    color: $color-black-alpha-100;
+    margin: auto;
+    padding: 20px;
   }
 
   .clients {

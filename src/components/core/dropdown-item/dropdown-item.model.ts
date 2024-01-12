@@ -1,3 +1,3 @@
 export type DropdownItemProps = {
-    size?: 'small' | 'medium' | 'large'
-}
+  size?: 'small' | 'medium' | 'large';
+};
