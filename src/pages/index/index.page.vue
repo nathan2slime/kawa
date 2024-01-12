@@ -66,8 +66,8 @@ const onUpdateClient = (client: Client) => {
     document: client.document.replace(/\D+/g, ''),
   };
 
-  clientStore.edit(data)
-  onToggleIsOpenDialog(false)
+  clientStore.edit(data);
+  onToggleIsOpenDialog(false);
 };
 
 const onToggleActiveClient = (client: Client) => {
@@ -78,6 +78,8 @@ const onToggleActiveClient = (client: Client) => {
 <template>
   <div class="index-page">
     <Header>
+      <h1>Clients</h1>
+
       <Button
         block
         class="add-client"
@@ -118,14 +120,17 @@ const onToggleActiveClient = (client: Client) => {
   width: 100%;
   height: 100vh;
   overflow-y: auto;
+  padding-top: 60px;
+
+  @include query(md) {
+    padding-top: 0px;
+  }
 
   header {
-    display: flex;
-    justify-content: flex-end;
-
-    position: sticky;
-    top: 0px;
-    z-index: 20;
+    h1 {
+      font-size: 0.95rem;
+      color: $color-black-200;
+    }
   }
 
   .add-client {
@@ -136,10 +141,14 @@ const onToggleActiveClient = (client: Client) => {
   .clients {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 
     gap: 12px;
-
     padding: 20px;
+
+    @include query('lg') {
+      justify-content: flex-start;
+    }
   }
 }
 </style>

@@ -36,16 +36,22 @@ onMounted(() => {
 
 <template>
   <aside class="app-menu">
-    <router-link
-      @click="() => onChangeActiveRoute(i.path)"
-      :to="i.path"
-      v-for="i in items"
-      :key="i.path"
-    >
-      <MenuItem v-bind:active="i.active" :title="i.title">
-        <component :is="i.child" :size="23" :strokeWidth="1" />
-      </MenuItem>
-    </router-link>
+    <img src="@/assets/favicon.svg" class="favicon" />
+
+    <div class="menu-items">
+      <router-link
+        @click="() => onChangeActiveRoute(i.path)"
+        :to="i.path"
+        v-for="i in items"
+        :key="i.path"
+      >
+        <MenuItem v-bind:active="i.active" :title="i.title">
+          <component :is="i.child" :size="23" :strokeWidth="1" />
+        </MenuItem>
+      </router-link>
+    </div>
+
+    <div />
   </aside>
 </template>
 
@@ -57,9 +63,21 @@ onMounted(() => {
   border-right: 1px solid $color-border-200;
 
   padding: 14px 12px;
-  display: flex;
-  flex-direction: column;
 
-  gap: 6px;
+  justify-content: space-between;
+
+  &,
+  .menu-items {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .favicon {
+    width: 50px;
+  }
+
+  .menu-items {
+    gap: 6px;
+  }
 }
 </style>

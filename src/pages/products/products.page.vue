@@ -36,7 +36,7 @@ const onCreateNewClient = (product: NewProduct) => {
   const data: Product = {
     ...product,
     id: createId(),
-    created_at: new Date().toString()
+    created_at: new Date().toString(),
   };
 
   productStore.add(data);
@@ -63,6 +63,8 @@ const onToggleActiveProduct = (product: Product) => {
 <template>
   <div class="index-page">
     <Header>
+      <h1>Products</h1>
+
       <Button
         block
         class="add-product"
@@ -103,14 +105,17 @@ const onToggleActiveProduct = (product: Product) => {
   width: 100%;
   height: 100vh;
   overflow-y: auto;
+  padding-top: 60px;
+
+  @include query(md) {
+    padding-top: 0px;
+  }
 
   header {
-    display: flex;
-    justify-content: flex-end;
-
-    position: sticky;
-    top: 0px;
-    z-index: 20;
+    h1 {
+      font-size: 0.95rem;
+      color: $color-black-200;
+    }
   }
 
   .add-product {
@@ -121,10 +126,14 @@ const onToggleActiveProduct = (product: Product) => {
   .products {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 
     gap: 12px;
-
     padding: 20px;
+
+    @include query('lg') {
+      justify-content: flex-start;
+    }
   }
 }
 </style>
