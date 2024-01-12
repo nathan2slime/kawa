@@ -30,7 +30,7 @@ const onToggleOpen = (e: boolean) => {
 
     <p>{{ data.email }}</p>
 
-    <div class="total_product">{{(data.products || []).length}} Products</div>
+    <div class="total_product">{{ (data.products || []).length }} Products</div>
 
     <span>{{ format(data.created_at, 'dd/MM/yyyy') }}</span>
     <Dropdown @update:open="onToggleOpen" :name="data.id" :open="isOpenOption">
@@ -100,7 +100,6 @@ const onToggleOpen = (e: boolean) => {
     font-weight: 600;
     color: $color-black-200;
   }
-
 
   p {
     font-size: 0.8rem;

@@ -1,26 +1,31 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import { ref } from 'vue';
 import { MenuIcon } from 'lucide-vue-next';
 
 import Drawer from '@/components/core/drawer/drawer.component.vue';
-import Menu from '@/components/core/menu/menu.component.vue'
+import Menu from '@/components/core/menu/menu.component.vue';
 
-const isOpenDrawer = ref(false)
+const isOpenDrawer = ref(false);
 
 const onToggleIsOpenDrawer = (e: boolean) => {
-  isOpenDrawer.value =e
-}
+  isOpenDrawer.value = e;
+};
 </script>
 
 <template>
   <nav class="app-navbar">
     <img src="@/assets/favicon.svg" class="favicon" />
 
-    <MenuIcon class="toggle-menu" @click="() => onToggleIsOpenDrawer(true)" :width="22" :strokeWidth="1" />
+    <MenuIcon
+      class="toggle-menu"
+      @click="() => onToggleIsOpenDrawer(true)"
+      :width="22"
+      :strokeWidth="1"
+    />
   </nav>
 
-  <Drawer :open="isOpenDrawer"  @on:close="onToggleIsOpenDrawer">
-    <Menu  @on:change="() => onToggleIsOpenDrawer(false)"/>
+  <Drawer :open="isOpenDrawer" @on:close="onToggleIsOpenDrawer">
+    <Menu @on:change="() => onToggleIsOpenDrawer(false)" />
   </Drawer>
 </template>
 
@@ -48,7 +53,7 @@ const onToggleIsOpenDrawer = (e: boolean) => {
     cursor: pointer;
   }
 
-  @include  query(md) {
+  @include query(md) {
     display: none;
   }
 }

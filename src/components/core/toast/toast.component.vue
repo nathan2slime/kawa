@@ -16,7 +16,7 @@ const icon = {
   <div :class="{ toast: true, open: toast.open, [toast.status]: true }">
     <component :is="icon[toast.status]" :width="22" :strokeWidth="1" />
 
-    {{ toast.title }}
+    <p>{{ toast.title }}</p>
   </div>
 </template>
 
@@ -25,15 +25,12 @@ const icon = {
   position: fixed;
   right: 50%;
   transform: translateX(50%);
-  z-index: 30;
+  z-index: 40;
 
   width: 100%;
   border: 1px solid transparent;
   max-width: fit-content;
-  padding: 8px;
-  padding-right: 20px;
-  padding-left: 12px;
-
+  padding: 8px 20px 8px;
   height: 40px;
   pointer-events: none;
   opacity: 0;
@@ -51,6 +48,10 @@ const icon = {
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
+
+  p {
+    white-space: nowrap;
+  }
 
   &.open {
     opacity: 1;

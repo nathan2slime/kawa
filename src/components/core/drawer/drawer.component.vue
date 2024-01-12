@@ -1,20 +1,24 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import { ref } from 'vue';
 
 import type { DrawerProps } from './drawer.model';
 
 const props = defineProps<DrawerProps>();
-const emit = defineEmits(['on:close'])
+const emit = defineEmits(['on:close']);
 
-const wrapper = ref()
+const wrapper = ref();
 
-const onClose = (e: MouseEvent)=> {
-  wrapper.value == e.target && emit('on:close')
-}
+const onClose = (e: MouseEvent) => {
+  wrapper.value == e.target && emit('on:close');
+};
 </script>
 
 <template>
-  <div ref="wrapper" @click="onClose" :class="{ drawer: true, open: props.open }">
+  <div
+    ref="wrapper"
+    @click="onClose"
+    :class="{ drawer: true, open: props.open }"
+  >
     <div class="drawer-content">
       <slot />
     </div>

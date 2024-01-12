@@ -6,7 +6,7 @@ import { onMounted, ref } from 'vue';
 import MenuItem from '@/components/core/menu-item/menu-item.component.vue';
 
 const route = useRoute();
-const emit = defineEmits(['on:change'])
+const emit = defineEmits(['on:change']);
 
 const items = ref([
   {
@@ -24,7 +24,7 @@ const items = ref([
 ]);
 
 const onChangeActiveRoute = (path: string) => {
-  emit('on:change')
+  emit('on:change');
 
   items.value = items.value.map(e => ({
     ...e,

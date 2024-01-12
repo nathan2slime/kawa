@@ -1,3 +1,3 @@
 export type DrawerProps = {
-    open: boolean
-}
+  open: boolean;
+};

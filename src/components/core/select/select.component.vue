@@ -2,14 +2,17 @@
 import type { SelectProps } from './select.model';
 
 const props = defineProps<SelectProps>();
-const emit = defineEmits(['on:change'])
+const emit = defineEmits(['on:change']);
 </script>
 
 <template>
   <div class="select">
-    <slot name="trigger" ></slot>
+    <slot name="trigger"></slot>
 
-    <div @click="() => emit('on:change', false)" :class="{'select-content': true, open: props.open}">
+    <div
+      @click="() => emit('on:change', false)"
+      :class="{ 'select-content': true, open: props.open }"
+    >
       <slot name="content"></slot>
     </div>
   </div>

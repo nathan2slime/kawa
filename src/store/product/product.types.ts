@@ -1,6 +1,6 @@
 export type NewProduct = {
   name: string;
-  active: boolean
+  active: boolean;
 };
 
 export type Product = {
