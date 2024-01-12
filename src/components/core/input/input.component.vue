@@ -5,7 +5,7 @@ import { computed } from 'vue';
 import type { InputProps } from './input.model';
 
 const props = defineProps<InputProps>();
-const emit = defineEmits(['update:value']);
+const emit = defineEmits(['update:value', 'blur', 'focus']);
 
 const model = computed({
   get() {
@@ -18,7 +18,13 @@ const model = computed({
 </script>
 
 <template>
-  <div :class="{ error: !!props.message, disabled: props.disabled, block: props.block }">
+  <div
+    :class="{
+      error: !!props.message,
+      disabled: props.disabled,
+      block: props.block,
+    }"
+  >
     <label v-if="props.label" :for="props.name">{{ label }}</label>
     <input
       v-maska
@@ -29,6 +35,8 @@ const model = computed({
       :autocomplete="props.complete"
       :placeholder="props.placeholder"
       v-model="model"
+      @focus="e => emit('focus', e)"
+      @blur="e => emit('blur', e)"
     />
 
     <span v-if="!!props.message">{{ props.message }}</span>
@@ -80,6 +88,7 @@ div {
 
   &.disabled input {
     opacity: 0.7;
+    cursor: not-allowed;
   }
 
   &.block {

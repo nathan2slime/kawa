@@ -30,6 +30,8 @@ const onToggleOpen = (e: boolean) => {
 
     <p>{{ data.email }}</p>
 
+    <div class="total_product">{{(data.products || []).length}} Products</div>
+
     <span>{{ format(data.created_at, 'dd/MM/yyyy') }}</span>
     <Dropdown @update:open="onToggleOpen" :name="data.id" :open="isOpenOption">
       <DropdownItem
@@ -69,7 +71,7 @@ const onToggleOpen = (e: boolean) => {
         "
       >
         <PlusCircle :width="18" :strokeWidth="1" />
-        Add product
+        Add Product
       </DropdownItem>
     </Dropdown>
 
@@ -99,6 +101,7 @@ const onToggleOpen = (e: boolean) => {
     color: $color-black-200;
   }
 
+
   p {
     font-size: 0.8rem;
     margin-top: 5px;
@@ -114,6 +117,12 @@ const onToggleOpen = (e: boolean) => {
     width: fit-content;
     color: $color-white-200;
     background: $color-danger-100;
+  }
+
+  .total_product {
+    font-size: 0.8rem;
+    color: $color-black-alpha-100;
+    margin-top: 4px;
   }
 
   > .trigger-dropdown {

@@ -13,6 +13,7 @@ import CardClient from '@/components/cards/client/card_client.component.vue';
 import type { Client, NewClient } from '@/store/client/client.types';
 import { useClientStore } from '@/store/client/client.store';
 import { useToastStore } from '@/store/toast/toast.store';
+import type { Product } from '@/store/product/product.types';
 
 const clientStore = useClientStore();
 const toast = useToastStore();
@@ -46,6 +47,7 @@ const onCreateNewClient = (client: NewClient) => {
     id: createId(),
     email: client.email.toLowerCase(),
     created_at: new Date().toString(),
+    products: [],
     phone: client.phone.replace(/\D+/g, ''),
     document: client.document.replace(/\D+/g, ''),
   };
@@ -76,6 +78,11 @@ const onUpdateClient = (client: Client) => {
 
   clientStore.edit(data);
   onToggleIsOpenDialogCreateClient(false);
+};
+
+const onAddProductToClient = (client: Client, product: Product) => {
+  clientStore.addProduct(client, product);
+  onToggleIsOpenDialogAddProductToClient(false)
 };
 
 const onToggleActiveClient = (client: Client) => {
@@ -134,8 +141,9 @@ const onToggleIsOpenDialogAddProductToClient = (e: boolean) => {
       @toggle-open="onToggleIsOpenDialogAddProductToClient"
     >
       <AddProductToClient
-        v-if="isOpenDialogAddProductToClient"
+        v-if="customerToAddProduct && isOpenDialogAddProductToClient"
         :client="customerToAddProduct"
+        @on:submit="onAddProductToClient"
         @on:close="onToggleIsOpenDialogAddProductToClient"
       />
     </Dialog>

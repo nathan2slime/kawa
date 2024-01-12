@@ -1,25 +1,58 @@
 <script setup lang="ts">
-import { onUnmounted, ref } from 'vue';
+import { computed, onUnmounted, ref } from 'vue';
 import { Save } from 'lucide-vue-next';
 
+import DropdownItem from '@/components/core/dropdown-item/dropdown-item.component.vue';
 import Button from '@/components/core/button/button.component.vue';
 import Input from '@/components/core/input/input.component.vue';
-import type { AddProductToClientProps } from './add_product_to_client.model';
+import Select from '@/components/core/select/select.component.vue';
+
+import { useClientStore } from '@/store/client/client.store';
+import { useProductStore } from '@/store/product/product.store';
 
 import { getErrorMessage } from '@/utils/form';
 
-import { schema } from './utils/schema';
+import type { AddProductToClientProps } from './add_product_to_client.model';
 
 const emit = defineEmits(['on:close', 'on:submit']);
+import { schema } from './utils/schema';
+import type { Product } from '@/store/product/product.types';
+
 const props = defineProps<AddProductToClientProps>();
+const productStore = useProductStore();
+const clientStore = useClientStore();
 
 const values = ref({
-  client: props.client?.name,
+  client: props.client.name,
   search: '',
 });
 
+const isOpenSearch = ref(false);
 const isValid = ref();
 const errors = ref();
+
+const currentProduct = ref<Product | null>();
+
+const products = computed(() => {
+  if (currentProduct.value?.name === values.value.search) return;
+
+  const clientProducts = props.client.products || [];
+  const productsNoIncluded = productStore.products.filter(
+    e => !clientProducts.includes(e.id),
+  );
+
+  const results = productsNoIncluded.filter(e => {
+    return e.name.toLowerCase().includes(values.value.search.toLowerCase());
+  });
+
+  if (results.length > 0) {
+    isOpenSearch.value = true;
+  }
+
+  currentProduct.value = undefined;
+
+  return results;
+});
 
 const validate = (value: string, name: string) => {
   (values.value as unknown as Record<string, string>)[name] = value;
@@ -31,7 +64,17 @@ const validate = (value: string, name: string) => {
 };
 
 const onSubmit = () => {
-  if (isValid) emit('on:submit', values.value);
+  if (isValid) emit('on:submit', props.client, currentProduct.value);
+};
+
+const onToggleIsOpenSearch = (e: boolean) => {
+  isOpenSearch.value = e;
+};
+
+const onSelectProduct = (product: Product) => {
+  currentProduct.value = product;
+
+  values.value.search = product.name;
 };
 
 onUnmounted(() => emit('on:close', false));
@@ -39,11 +82,11 @@ onUnmounted(() => emit('on:close', false));
 
 <template>
   <form @submit.prevent="() => {}" class="add_product_to_client">
-    <h1>Give new product</h1>
+    <h1>Add product</h1>
 
     <div>
       <Input
-          v-if="!!values.client"
+        v-if="!!values.client"
         :value="values.client"
         @update:value="validate"
         complete="name"
@@ -51,14 +94,29 @@ onUnmounted(() => emit('on:close', false));
         label="Client"
         name="client"
       />
-      <Input
-        :value="values.search"
-        :message="getErrorMessage(errors, 'search')"
-        complete="search"
-        @update:value="validate"
-        placeholder="Search by product name"
-        name="search"
-      />
+
+      <Select :open="isOpenSearch" @on:change="onToggleIsOpenSearch">
+        <template #trigger>
+          <Input
+            :value="values.search"
+            complete="search"
+            @update:value="validate"
+            placeholder="Search by product name"
+            name="search"
+          />
+        </template>
+
+        <template #content>
+          <DropdownItem
+            size="medium"
+            v-for="product in products"
+            :key="product.id"
+            @click="() => onSelectProduct(product)"
+          >
+            {{ product.name }}
+          </DropdownItem>
+        </template>
+      </Select>
     </div>
 
     <footer>
@@ -72,7 +130,7 @@ onUnmounted(() => emit('on:close', false));
       </Button>
       <Button
         block
-        :disabled="!isValid"
+        :disabled="!currentProduct"
         @click="onSubmit"
         type="submit"
         color="primary"

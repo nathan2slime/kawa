@@ -1,15 +1,20 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { DropdownItemProps } from './dropdown-item.model';
+
+const props = defineProps<DropdownItemProps>();
+</script>
 
 <template>
-  <div class="dropdown-item">
+  <div :class="{ 'dropdown-item': true, [props.size || 'small']: true }">
     <slot />
   </div>
 </template>
 
 <style scoped lang="scss">
 .dropdown-item {
-  min-width: 97px;
+  min-width: 127px;
   padding: 4px 8px;
+  height: 30px;
 
   display: flex;
   justify-content: flex-start;
@@ -23,6 +28,10 @@
 
   &:hover {
     background: $color-primary-solid-100;
+  }
+
+  &.medium {
+    height: 40px;
   }
 }
 </style>

@@ -66,6 +66,7 @@ onUnmounted(() => emit('on:close', false));
           label="CPF"
           block
           complete="off"
+          :disabled="!!props.data"
           maska="###.###.###-##"
           @update:value="validate"
           name="document"
@@ -87,6 +88,7 @@ onUnmounted(() => emit('on:close', false));
         :value="values.email"
         :message="getErrorMessage(errors, 'email')"
         label="Email"
+        :disabled="!!props.data"
         complete="email"
         @update:value="validate"
         name="email"
