@@ -93,7 +93,7 @@ const onToggleActiveProduct = (product: Product) => {
             productEditData ? onUpdateClient(e) : onCreateNewClient(e);
           }
         "
-        @on:create="onToggleIsOpenDialog"
+        @on:close="onToggleIsOpenDialog"
         v-if="isOpenDialog"
       />
     </Dialog>
