@@ -7,7 +7,7 @@ const emit = defineEmits(['update:active']);
 
 <template>
   <div class="app-switch">
-    <label v-if="props.label">{{ props.label }}</label>
+    <label v-if="props.label" :for="props.name">{{ props.label }}</label>
 
     <div
       role="switch"
@@ -15,6 +15,7 @@ const emit = defineEmits(['update:active']);
       :aria-checked="props.active"
       :class="{ active: props.active, switch: true }"
     >
+      <input type="checkbox" :id="props.name" />
       <div />
     </div>
   </div>
@@ -50,6 +51,10 @@ const emit = defineEmits(['update:active']);
     border-radius: 100%;
     transition: all 0.15s;
     background: $color-white-200;
+  }
+
+  input {
+    display: none;
   }
 
   &.active {

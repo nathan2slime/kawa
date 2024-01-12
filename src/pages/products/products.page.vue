@@ -9,9 +9,9 @@ import Button from '@/components/core/button/button.component.vue';
 import Dialog from '@/components/core/dialog/dialog.component.vue';
 import CardProduct from '@/components/cards/product/card_product.component.vue';
 
-import type { Product, NewProduct } from '@/store/product/product.types';
 import { useToastStore } from '@/store/toast/toast.store';
 import { useProductStore } from '@/store/product/product.store';
+import type { Product, NewProduct } from '@/store/product/product.types';
 
 const productStore = useProductStore();
 const toast = useToastStore();
@@ -80,7 +80,7 @@ const onToggleActiveProduct = (product: Product) => {
         v-for="client in products"
         :key="client.id"
         :data="client"
-        @on-edit="() => onRequestEditProduct(client)"
+        @on:edit="() => onRequestEditProduct(client)"
         @update:active="() => onToggleActiveProduct(client)"
       />
     </div>
@@ -88,12 +88,12 @@ const onToggleActiveProduct = (product: Product) => {
     <Dialog :open="isOpenDialog" @toggle-open="onToggleIsOpenDialog">
       <CreateProduct
         :data="productEditData"
-        @submit="
+        @on:submit="
           e => {
             productEditData ? onUpdateClient(e) : onCreateNewClient(e);
           }
         "
-        @toggle-dialog="onToggleIsOpenDialog"
+        @on:create="onToggleIsOpenDialog"
         v-if="isOpenDialog"
       />
     </Dialog>

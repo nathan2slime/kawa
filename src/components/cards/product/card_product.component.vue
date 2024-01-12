@@ -9,7 +9,7 @@ import DropdownItem from '@/components/core/dropdown-item/dropdown-item.componen
 import type { CardProductProps } from './card_product.model';
 
 const { data } = defineProps<CardProductProps>();
-const emit = defineEmits(['on-edit', 'update:active']);
+const emit = defineEmits(['on:edit', 'update:active']);
 
 const isOpenOption = ref(false);
 
@@ -29,7 +29,7 @@ const onToggleOpen = (e: boolean) => {
         @click="
           () => {
             onToggleOpen(false);
-            emit('on-edit');
+            emit('on:edit');
           }
         "
       >

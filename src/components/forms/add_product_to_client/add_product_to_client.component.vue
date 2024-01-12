@@ -4,24 +4,19 @@ import { Save } from 'lucide-vue-next';
 
 import Button from '@/components/core/button/button.component.vue';
 import Input from '@/components/core/input/input.component.vue';
-import Switch from '@/components/core/switch/switch.component.vue';
-import type { CreateProductProps } from './create_product.model';
+import type { AddProductToClientProps } from './add_product_to_client.model';
 
 import { getErrorMessage } from '@/utils/form';
 
 import { schema } from './utils/schema';
 
-const emit = defineEmits(['on:create', 'on:submit', 'on:close']);
-const props = defineProps<CreateProductProps>();
+const emit = defineEmits(['on:close', 'on:submit']);
+const props = defineProps<AddProductToClientProps>();
 
-const values = ref(
-  props.data
-    ? props.data
-    : {
-        name: '',
-        active: false,
-      },
-);
+const values = ref({
+  client: props.client?.name,
+  search: '',
+});
 
 const isValid = ref();
 const errors = ref();
@@ -43,24 +38,26 @@ onUnmounted(() => emit('on:close', false));
 </script>
 
 <template>
-  <form @submit.prevent="() => {}" class="create_product">
-    <h1>{{ props.data ? 'Edit product' : 'New product' }}</h1>
+  <form @submit.prevent="() => {}" class="add_product_to_client">
+    <h1>Give new product</h1>
 
     <div>
       <Input
-        :value="values.name"
-        :message="getErrorMessage(errors, 'name')"
-        complete="name"
-        label="Name"
+          v-if="!!values.client"
+        :value="values.client"
         @update:value="validate"
-        name="name"
+        complete="name"
+        disabled
+        label="Client"
+        name="client"
       />
-
-      <Switch
-        label="Active"
-        :active="values.active"
-        name="active"
-        @update:active="validate"
+      <Input
+        :value="values.search"
+        :message="getErrorMessage(errors, 'search')"
+        complete="search"
+        @update:value="validate"
+        placeholder="Search by product name"
+        name="search"
       />
     </div>
 
@@ -88,7 +85,7 @@ onUnmounted(() => emit('on:close', false));
 </template>
 
 <style scoped lang="scss">
-.create_product {
+.add_product_to_client {
   width: 100%;
   padding: 20px;
 
